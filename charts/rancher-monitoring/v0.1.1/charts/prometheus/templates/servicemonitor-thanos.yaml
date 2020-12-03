@@ -1,0 +1,23 @@
+apiVersion: {{ template "operator_api_version" . }}
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: {{ template "app.name" . }}
+    chart: {{ template "app.version" . }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    source: rancher-monitoring
+  name: {{ template "app.fullname" . }}-thanos
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "app.name" . }}
+      chart: {{ template "app.version" . }}
+      release: {{ .Release.Name }}
+  namespaceSelector:
+    matchNames:
+    - {{ .Release.Namespace | quote }}
+  endpoints:
+  - path: /metrics
+    port: thanos-http
+
