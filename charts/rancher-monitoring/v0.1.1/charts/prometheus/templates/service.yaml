@@ -28,6 +28,9 @@ metadata:
   name: access-thanos
   annotations:
     cloud.google.com/load-balancer-type: Internal
+    {{- if .Values.thanos.annotations }}
+    {{ .Values.thanos.annotations }}
+    {{- end }}
   labels:
     app: {{ template "app.name" . }}
     chart: {{ template "app.version" . }}
