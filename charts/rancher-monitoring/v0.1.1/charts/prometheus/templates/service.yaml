@@ -29,7 +29,7 @@ metadata:
   annotations:
     cloud.google.com/load-balancer-type: Internal
     {{- if .Values.thanos.annotations }}
-    {{ .Values.thanos.annotations }}
+    {{- toYaml .Values.thanos.annotations | nindent 4 }}
     {{- end }}
   labels:
     app: {{ template "app.name" . }}
