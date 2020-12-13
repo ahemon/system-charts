@@ -134,6 +134,7 @@ spec:
 {{- end }}
 {{- if .Values.ClusterServiceMonitor }}
   podMonitorNamespaceSelector: {}
+  podMonitorSelector: {}
   serviceMonitorNamespaceSelector: {}
 {{- else }}
 {{ include "serviceMonitor.namespace.selector" . | indent 2 }}
