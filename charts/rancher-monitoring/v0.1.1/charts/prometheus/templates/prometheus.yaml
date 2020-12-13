@@ -133,6 +133,7 @@ spec:
   serviceAccountName: {{ default (default (include "app.fullname" .) .Values.serviceAccountName) .Values.serviceAccountNameOverride }}
 {{- end }}
 {{- if .Values.ClusterServiceMonitor }}
+  podMonitorNamespaceSelector: {}
   serviceMonitorNamespaceSelector: {}
 {{- else }}
 {{ include "serviceMonitor.namespace.selector" . | indent 2 }}
