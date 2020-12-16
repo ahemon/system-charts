@@ -132,7 +132,13 @@ spec:
 {{- if .Values.enabledRBAC }}
   serviceAccountName: {{ default (default (include "app.fullname" .) .Values.serviceAccountName) .Values.serviceAccountNameOverride }}
 {{- end }}
+{{- if .Values.ClusterServiceMonitor }}
+  podMonitorNamespaceSelector: {}
+  podMonitorSelector: {}
+  serviceMonitorNamespaceSelector: {}
+{{- else }}
 {{ include "serviceMonitor.namespace.selector" . | indent 2 }}
+{{- end }}
 {{- if or (.Values.serviceMonitorSelector) (eq .Values.level "project") }}
   serviceMonitorSelector:
 {{ toYaml .Values.serviceMonitorSelector | indent 4 }}
