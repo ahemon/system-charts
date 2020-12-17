@@ -31,6 +31,9 @@ metadata:
     {{- if .Values.thanos.annotations }}
     {{- toYaml .Values.thanos.annotations | nindent 4 }}
     {{- end }}
+    {{- if .Values.thanos.hostname }}
+    external-dns.alpha.kubernetes.io/hostname: {{ .Values.thanos.hostname }}
+    {{- end }}
   labels:
     app: {{ template "app.name" . }}
     chart: {{ template "app.version" . }}
