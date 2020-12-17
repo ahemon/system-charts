@@ -68,7 +68,7 @@ spec:
   listenLocal: true
 {{- end }}
   podMetadata:
-    creationTimestamp: {{ now | date "2006-01-02T15:04:05Z" | quote }}
+    #    creationTimestamp: {{ now | date "2006-01-02T15:04:05Z" | quote }}
     labels:
       app: {{ template "app.name" . }}
       chart: {{ template "app.version" . }}
