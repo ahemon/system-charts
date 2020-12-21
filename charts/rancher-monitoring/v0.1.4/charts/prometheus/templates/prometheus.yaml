@@ -72,6 +72,7 @@ spec:
       app: {{ template "app.name" . }}
       chart: {{ template "app.version" . }}
       release: {{ .Release.Name }}
+      io.cattle.field/appId: {{ .Release.Name }}
 {{- if .Values.alertingEndpoints }}
   alerting:
     alertmanagers:
