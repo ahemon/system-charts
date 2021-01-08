@@ -13,6 +13,24 @@ spec:
 {{ toYaml .Values.securityContext | indent 4 }}
 {{- end }}
   containers:
+{{- if .Values.thanos.proxy }}
+  - env:
+    - name: HTTP_PROXY
+      value: {{ .Values.thanos.proxy }}
+    - name: HTTPS_PROXY
+      value: {{ .Values.thanos.proxy }}
+    - name: POD_IP
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: status.podIP
+    - name: OBJSTORE_CONFIG
+      valueFrom:
+        secretKeyRef:
+          key: thanos.yaml
+          name: prometheus-cluster-monitoring-thanos
+    name: thanos-sidecar
+{{- end }}
   - name: prometheus-proxy
     command:
     - /bin/sh
