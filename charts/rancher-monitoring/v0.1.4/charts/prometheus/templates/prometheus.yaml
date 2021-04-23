@@ -120,7 +120,7 @@ spec:
       key: thanos.yaml
       name: {{ template "app.thanos.fullname" . }}
 {{- end }}
-{{- if .Values.nodeSelectors.enabled }}
+{{- if .Values.nodeSelectors }}
   nodeSelector:
     {{- range .Values.nodeSelectors }}
     {{- $pair := regexSplit "=" . 2 }}
