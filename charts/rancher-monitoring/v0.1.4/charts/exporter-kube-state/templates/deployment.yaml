@@ -42,13 +42,12 @@ spec:
       securityContext:
 {{ toYaml .Values.securityContext | indent 8 }}
       {{- end }}
-      tolerations:
-{{- include "linux-node-tolerations" . | nindent 8}}
       {{- if .Values.tolerations }}
+      tolerations:
 {{ toYaml .Values.tolerations | indent 8 }}
       {{- end }}
+      {{- if .Values.nodeSelectors }}
       nodeSelector:
-{{- include "linux-node-selector" . | nindent 8 }}
         {{- range .Values.nodeSelectors }}
         {{- $pair := regexSplit "=" . 2 }}
         {{- if eq 2 (len $pair) }}
@@ -57,3 +56,4 @@ spec:
         {{ (index $pair 0) }}: ""
         {{- end }}
         {{- end }}
+      {{- end }}

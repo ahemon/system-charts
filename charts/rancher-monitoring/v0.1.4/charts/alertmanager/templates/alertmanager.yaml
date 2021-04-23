@@ -18,8 +18,8 @@ spec:
       chart: {{ template "app.version" . }}
       release: {{ .Release.Name }}
   baseImage: {{ template "system_default_registry" . }}{{ .Values.image.repository }}
+  {{- if .Values.nodeSelectors }}
   nodeSelector:
-{{- include "linux-node-selector" . | nindent 4 }}
     {{- range .Values.nodeSelectors }}
     {{- $pair := regexSplit "=" . 2 }}
     {{- if eq 2 (len $pair) }}
@@ -28,6 +28,7 @@ spec:
     {{ (index $pair 0) }}: ""
     {{- end }}
     {{- end }}
+  {{- end }}
   paused: {{ .Values.paused }}
   replicas: {{ .Values.replicaCount }}
   logLevel:  {{ .Values.logLevel }}
@@ -75,8 +76,7 @@ spec:
             matchLabels:
               app: {{ template "app.name" . }}
               alertmanager: {{ .Release.Name }}
-  tolerations:
-{{- include "linux-node-tolerations" . | nindent 8 }}
 {{- if .Values.tolerations }}
+  tolerations:
 {{ toYaml .Values.tolerations | indent 4 }}
 {{- end }}

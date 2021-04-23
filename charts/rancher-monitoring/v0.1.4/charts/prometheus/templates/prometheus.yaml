@@ -212,9 +212,8 @@ spec:
             matchLabels:
               app: {{ template "app.name" . }}
               prometheus: {{ .Release.Name }}
-  tolerations:
-{{- include "linux-node-tolerations" . | nindent 4}}
 {{- if .Values.tolerations }}
+  tolerations:
 {{ toYaml .Values.tolerations | indent 4 }}
 {{- end }}
 {{- if (include "additional-scrape-configs.yaml" .) }}
