@@ -120,8 +120,8 @@ spec:
       key: thanos.yaml
       name: {{ template "app.thanos.fullname" . }}
 {{- end }}
+{{- if .Values.nodeSelectors.enabled }}
   nodeSelector:
-{{- include "linux-node-selector" . | nindent 4 }}
     {{- range .Values.nodeSelectors }}
     {{- $pair := regexSplit "=" . 2 }}
     {{- if eq 2 (len $pair) }}
@@ -130,6 +130,7 @@ spec:
     {{ (index $pair 0) }}: ""
     {{- end }}
     {{- end }}
+{{- end }}
   paused: {{ .Values.paused }}
   replicas: {{ .Values.replicaCount }}
   logLevel:  {{ .Values.logLevel }}
